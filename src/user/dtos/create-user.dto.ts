@@ -29,11 +29,5 @@ export class CreateUserDto {
   gender: string;
 
   @IsNotEmpty()
-  province: string;
-
-  @IsNotEmpty()
-  district: string;
-
-  @IsNotEmpty()
-  ward: string;
+  wardId: number;
 }

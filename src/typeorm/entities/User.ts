@@ -29,13 +29,7 @@ export class User {
   gender: string;
 
   @Column()
-  province: string;
-
-  @Column()
-  district: string;
-
-  @Column()
-  ward: string;
+  wardId: number;
 
   @Column({
     type: 'timestamp',
