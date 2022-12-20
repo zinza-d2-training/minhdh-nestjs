@@ -10,10 +10,10 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
-  @Get('/all')
+  @Get()
   async getAllUsers() {
     const allUsers = await this.userService.findAll();
     return allUsers;
@@ -25,7 +25,7 @@ export class UserController {
     return user;
   }
 
-  @Post('/add')
+  @Post()
   async createUser(@Body() user: CreateUserDto) {
     const newUser = await this.userService.createUser(user);
     return newUser;
