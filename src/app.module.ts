@@ -5,10 +5,12 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { ConsoleModule } from '@squareboat/nest-console';
+import { AdministrativeUnitModule } from './administrative-unit/administrative-unit.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -19,10 +21,13 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DB,
       entities: [User],
       synchronize: true,
+      autoLoadEntities: true
     }),
     UserModule,
+    ConsoleModule,
+    AdministrativeUnitModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

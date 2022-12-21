@@ -34,14 +34,14 @@ export class User {
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
-    nullable: true,
+    nullable: true
   })
   created_at: Timestamp;
 
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
-    nullable: true,
+    nullable: true
   })
   updated_at: Timestamp;
 }
