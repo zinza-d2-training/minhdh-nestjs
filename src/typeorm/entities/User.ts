@@ -1,7 +1,7 @@
 import { IsEmail } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,7 +20,7 @@ export class User {
   password: string;
 
   @Column({ unique: true })
-  cmnd: string;
+  identity_card_number: string;
 
   @Column()
   birthday: Date;
@@ -29,7 +29,7 @@ export class User {
   gender: string;
 
   @Column()
-  wardId: number;
+  ward_id: number;
 
   @Column({
     type: 'timestamp',

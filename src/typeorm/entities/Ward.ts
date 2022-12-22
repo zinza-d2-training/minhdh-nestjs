@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { District } from './District';
 
-@Entity()
+@Entity('wards')
 export class Ward {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,10 +17,10 @@ export class Ward {
   name: string;
 
   @Column()
-  districtId: number;
+  district_id: number;
 
   @ManyToOne(() => District, (district) => district.wards)
-  @JoinColumn({ name: 'districtId' })
+  @JoinColumn({ name: 'district_id' })
   district: District;
 
   @Column({

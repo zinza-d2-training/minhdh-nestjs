@@ -44,7 +44,7 @@ export class AdministrativeUnitService {
         if (!includeDistrict) {
           districts.push({
             name: item['Quận Huyện'],
-            provinceId: itemProvince.id
+            province_id: itemProvince.id
           });
         }
       });
@@ -62,7 +62,7 @@ export class AdministrativeUnitService {
         if (!includeWard) {
           wards.push({
             name: item['Phường Xã'],
-            districtId: itemDistrict.id
+            district_id: itemDistrict.id
           });
         }
       });

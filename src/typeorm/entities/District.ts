@@ -10,7 +10,7 @@ import {
 import { Ward } from './Ward';
 import { Province } from './Province';
 
-@Entity()
+@Entity('districts')
 export class District {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,10 +19,10 @@ export class District {
   name: string;
 
   @Column()
-  provinceId: number;
+  province_id: number;
 
   @ManyToOne(() => Province, (province) => province.districts)
-  @JoinColumn({ name: 'provinceId' })
+  @JoinColumn({ name: 'province_id' })
   province: Province;
 
   @OneToMany(() => Ward, (ward) => ward.district)

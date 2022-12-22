@@ -25,7 +25,7 @@ export class User1671691725186 implements MigrationInterface {
             length: '255'
           },
           {
-            name: 'cmnd',
+            name: 'identity_card_number',
             isUnique: true,
             type: 'varchar',
             length: '12'
@@ -50,7 +50,7 @@ export class User1671691725186 implements MigrationInterface {
             length: '255'
           },
           {
-            name: 'wardId',
+            name: 'ward_id',
             type: 'int'
           },
           {
@@ -75,11 +75,11 @@ export class User1671691725186 implements MigrationInterface {
       true
     );
     await queryRunner.createForeignKey(
-      'user',
+      'users',
       new TableForeignKey({
-        columnNames: ['wardId'],
+        columnNames: ['ward_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'ward',
+        referencedTableName: 'wards',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
@@ -87,6 +87,6 @@ export class User1671691725186 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user');
+    await queryRunner.dropTable('users');
   }
 }

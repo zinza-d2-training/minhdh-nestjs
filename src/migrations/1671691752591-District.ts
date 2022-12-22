@@ -9,7 +9,7 @@ export class District1671691752591 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'district',
+        name: 'districts',
         columns: [
           {
             name: 'id',
@@ -19,7 +19,7 @@ export class District1671691752591 implements MigrationInterface {
             generationStrategy: 'increment'
           },
           {
-            name: 'provinceId',
+            name: 'province_id',
             type: 'int'
           },
           {
@@ -46,9 +46,9 @@ export class District1671691752591 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'districts',
       new TableForeignKey({
-        columnNames: ['provinceId'],
+        columnNames: ['province_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'province',
+        referencedTableName: 'provinces',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       })
@@ -56,6 +56,6 @@ export class District1671691752591 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('district');
+    await queryRunner.dropTable('districts');
   }
 }

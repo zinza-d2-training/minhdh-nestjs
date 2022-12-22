@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { District } from './District';
 
-@Entity()
+@Entity('provinces')
 export class Province {
   @PrimaryGeneratedColumn()
   id: number;
