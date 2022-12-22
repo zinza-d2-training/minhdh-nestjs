@@ -23,7 +23,7 @@ export class User {
   cmnd: string;
 
   @Column()
-  birthday: string;
+  birthday: Date;
 
   @Column()
   gender: string;
