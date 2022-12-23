@@ -28,6 +28,17 @@ export class UserService {
     }
   }
 
+  async findEmailLogin(email: string) {
+    try {
+      const user = await this.repo.findOne({
+        where: { email }
+      });
+      return user;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async createUser(newUser: CreateUserDto) {
     try {
       const user = this.repo.create(newUser);

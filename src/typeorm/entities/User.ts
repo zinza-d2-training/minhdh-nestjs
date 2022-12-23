@@ -1,5 +1,13 @@
 import { IsEmail } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  ManyToOne,
+  JoinColumn
+} from 'typeorm';
+import { Ward } from './Ward';
 
 @Entity('users')
 export class User {
@@ -27,6 +35,10 @@ export class User {
 
   @Column()
   gender: string;
+
+  @ManyToOne(() => Ward, (ward) => ward.users)
+  @JoinColumn({ name: 'ward_id' })
+  ward: Ward;
 
   @Column()
   ward_id: number;

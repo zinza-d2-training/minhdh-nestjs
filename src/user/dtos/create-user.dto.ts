@@ -16,7 +16,7 @@ export class CreateUserDto {
 
   @IsDefined()
   @Length(12)
-  cmnd: string;
+  identity_card_number: string;
 
   @IsDefined()
   @MinLength(8)
@@ -29,5 +29,5 @@ export class CreateUserDto {
   gender: string;
 
   @IsNotEmpty()
-  wardId: number;
+  ward_id: number;
 }
