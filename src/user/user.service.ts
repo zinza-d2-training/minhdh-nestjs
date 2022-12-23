@@ -20,7 +20,7 @@ export class UserService {
   async findOne(id: number) {
     try {
       const user = await this.repo.findOne({
-        where: { id },
+        where: { id }
       });
       return user;
     } catch (err) {

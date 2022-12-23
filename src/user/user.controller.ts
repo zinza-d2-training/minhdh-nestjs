@@ -5,7 +5,7 @@ import {
   Body,
   Delete,
   Param,
-  ParseIntPipe,
+  ParseIntPipe
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserService } from './user.service';
@@ -34,7 +34,7 @@ export class UserController {
   @Post(':id')
   async updateUserById(
     @Param('id', ParseIntPipe) id: number,
-    @Body() user: CreateUserDto,
+    @Body() user: CreateUserDto
   ) {
     const userUpdate = await this.userService.updateUser(id, user);
     return userUpdate;
