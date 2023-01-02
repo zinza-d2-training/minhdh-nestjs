@@ -38,6 +38,18 @@ export class UserService {
     }
   }
 
+  async findUserExist(identity_card_number: string) {
+    try {
+      return await this.repo.findOneOrFail({
+        where: {
+          identity_card_number
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async createUser(newUser: CreateUserDto) {
     try {
       const user = this.repo.create(newUser);
