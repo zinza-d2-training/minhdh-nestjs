@@ -30,10 +30,9 @@ export class UserService {
 
   async findEmailLogin(email: string) {
     try {
-      const user = await this.repo.findOne({
+      return await this.repo.findOneOrFail({
         where: { email }
       });
-      return user;
     } catch (err) {
       throw new Error(err);
     }
