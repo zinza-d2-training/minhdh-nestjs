@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
 import { District } from './District';
+import { User } from './User';
 
 @Entity('wards')
 export class Ward {
@@ -22,6 +24,9 @@ export class Ward {
   @ManyToOne(() => District, (district) => district.wards)
   @JoinColumn({ name: 'district_id' })
   district: District;
+
+  @OneToMany(() => User, (user) => user.ward)
+  users: User[];
 
   @Column({
     type: 'timestamp',
