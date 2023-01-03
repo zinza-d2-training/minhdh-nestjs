@@ -11,6 +11,7 @@ import { UserType } from './type/loginType';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { Repository } from 'typeorm';
 import { User } from 'src/typeorm/entities/User';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 @Dependencies(UserService)
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    @InjectRepository(User)
     private userRepository: Repository<User>
   ) {}
 
