@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param } from '@nestjs/common';
 import { UserEmailDto } from './dto/user-email.dto';
 import { ForgotPasswordService } from './forgot-password.service';
 
@@ -11,8 +11,8 @@ export class ForgotPasswordController {
     return await this.forgotPasswordService.forgotPassword(userEmailDto);
   }
 
-  @Get('/reset')
-  async resetPassword(@Query('token') token: string) {
+  @Get('/reset/:token')
+  async resetPassword(@Param('token') token: string) {
     return this.forgotPasswordService.resetPassword(token);
   }
 }
