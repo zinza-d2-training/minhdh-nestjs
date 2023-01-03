@@ -45,21 +45,16 @@ export class AuthService {
 
   async register(user: CreateUserDto) {
     try {
-      const userExist = await this.userService.findUserExist(
+      const userExist = await this.userService.findUserByIdentityCard(
         user.identity_card_number
       );
       if (!userExist) {
-        const saltRounds = 10;
-        const salt = bcrypt.genSaltSync(saltRounds);
+        const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(user.password, salt);
-        const saveUser = {
+        return await this.userRepository.save({
           ...user,
           password: hashPassword
-        };
-        const newUser = await this.userRepository.save(saveUser);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...result } = newUser;
-        return result;
+        });
       } else {
         throw new HttpException(
           'Tài khoản đã tồn tại',
