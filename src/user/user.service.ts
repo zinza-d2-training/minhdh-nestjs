@@ -42,6 +42,14 @@ export class UserService {
     });
   }
 
+  async findUserByResetToken(token: string) {
+    return await this.repo.findOneOrFail({
+      where: {
+        reset_token: token
+      }
+    });
+  }
+
   async createUser(newUser: CreateUserDto) {
     try {
       const user = this.repo.create(newUser);
@@ -51,7 +59,7 @@ export class UserService {
     }
   }
 
-  async updateUser(id: number, userUpdate: CreateUserDto) {
+  async updateUserById(id: number, userUpdate: CreateUserDto) {
     try {
       return await this.repo.update({ id }, userUpdate);
     } catch (err) {

@@ -54,6 +54,11 @@ export class User1671691725186 implements MigrationInterface {
             type: 'int'
           },
           {
+            name: 'reset_token',
+            type: 'varchar',
+            length: '255'
+          },
+          {
             name: 'isAdmin',
             type: 'tinyint',
             default: 0

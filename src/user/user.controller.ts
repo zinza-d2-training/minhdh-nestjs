@@ -36,7 +36,7 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
     @Body() user: CreateUserDto
   ) {
-    const userUpdate = await this.userService.updateUser(id, user);
+    const userUpdate = await this.userService.updateUserById(id, user);
     return userUpdate;
   }
 

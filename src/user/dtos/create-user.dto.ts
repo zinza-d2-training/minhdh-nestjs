@@ -30,4 +30,6 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   ward_id: number;
+
+  reset_token: string;
 }
