@@ -28,14 +28,18 @@ export class UserService {
     }
   }
 
-  async findEmailLogin(email: string) {
-    try {
-      return await this.repo.findOneOrFail({
-        where: { email }
-      });
-    } catch (err) {
-      throw new Error(err);
-    }
+  async findUserByEmail(email: string) {
+    return await this.repo.findOneOrFail({
+      where: { email }
+    });
+  }
+
+  async findUserByIdentityCard(identityCardNumber: string) {
+    return await this.repo.findOneOrFail({
+      where: {
+        identity_card_number: identityCardNumber
+      }
+    });
   }
 
   async createUser(newUser: CreateUserDto) {

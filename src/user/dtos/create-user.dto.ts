@@ -23,7 +23,7 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  birthday: string;
+  birthday: Date;
 
   @IsNotEmpty()
   gender: string;
