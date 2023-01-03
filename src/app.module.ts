@@ -8,6 +8,7 @@ import { ConsoleModule } from '@squareboat/nest-console';
 import { AdministrativeUnitModule } from './administrative-unit/administrative-unit.module';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,7 +18,8 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     ConsoleModule,
     AdministrativeUnitModule,
-    AuthModule
+    AuthModule,
+    ForgotPasswordModule
   ],
   controllers: [AppController],
   providers: [AppService]

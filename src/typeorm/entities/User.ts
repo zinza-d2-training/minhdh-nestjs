@@ -45,6 +45,9 @@ export class User {
   @Column()
   ward_id: number;
 
+  @Column()
+  reset_token: string;
+
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
