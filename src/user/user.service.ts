@@ -28,16 +28,16 @@ export class UserService {
     }
   }
 
-  async findEmailLogin(email: string) {
+  async findUserByEmail(email: string) {
     return await this.repo.findOneOrFail({
       where: { email }
     });
   }
 
-  async findUserByIdentityCard(identity_card_number: string) {
+  async findUserByIdentityCard(identityCardNumber: string) {
     return await this.repo.findOneOrFail({
       where: {
-        identity_card_number
+        identity_card_number: identityCardNumber
       }
     });
   }

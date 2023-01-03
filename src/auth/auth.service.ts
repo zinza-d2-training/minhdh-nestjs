@@ -2,7 +2,8 @@ import {
   Dependencies,
   HttpException,
   HttpStatus,
-  Injectable
+  Injectable,
+  InternalServerErrorException
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
@@ -24,7 +25,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findEmailLogin(email);
+    const user = await this.userService.findUserByEmail(email);
     if (user) {
       const is_equal = bcrypt.compareSync(password, user.password);
       if (is_equal) {
@@ -62,7 +63,7 @@ export class AuthService {
         );
       }
     } catch (error) {
-      throw new Error(error);
+      throw new InternalServerErrorException(error);
     }
   }
 
