@@ -15,6 +15,30 @@ export class AdministrativeUnitService {
     @InjectRepository(Ward) private repoWard: Repository<Ward>
   ) {}
 
+  async getProvinces() {
+    try {
+      return await this.repoProvince.find();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getDistricts(id: number) {
+    try {
+      return await this.repoDistrict.find({ where: { province_id: id } });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async getWards(id: number) {
+    try {
+      return await this.repoWard.find({ where: { district_id: id } });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   @Command('excel', { desc: 'import data' })
   async importData(_cli: ConsoleIO) {
     const provinces = [];

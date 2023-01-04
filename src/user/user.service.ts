@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
 import { CreateUserDto } from './dtos/create-user.dto';
-
+import { UpdateUser } from './dtos/update-user.dto';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
@@ -19,35 +19,48 @@ export class UserService {
 
   async findOne(id: number) {
     try {
-      const user = await this.repo.findOne({
+      return await this.repo.findOne({
         where: { id }
       });
-      return user;
     } catch (err) {
       throw new Error(err);
     }
   }
 
   async findUserByEmail(email: string) {
-    return await this.repo.findOneOrFail({
-      where: { email }
-    });
+    try {
+      return await this.repo.findOne({
+        where: {
+          email
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   async findUserByIdentityCard(identityCardNumber: string) {
-    return await this.repo.findOneOrFail({
-      where: {
-        identity_card_number: identityCardNumber
-      }
-    });
+    try {
+      return await this.repo.findOne({
+        where: {
+          identity_card_number: identityCardNumber
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   async findUserByResetToken(token: string) {
-    return await this.repo.findOneOrFail({
-      where: {
-        reset_token: token
-      }
-    });
+    try {
+      return await this.repo.findOne({
+        where: {
+          reset_token: token
+        }
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   async createUser(newUser: CreateUserDto) {
@@ -59,7 +72,7 @@ export class UserService {
     }
   }
 
-  async updateUserById(id: number, userUpdate: CreateUserDto) {
+  async updateUserById(id: number, userUpdate: UpdateUser) {
     try {
       return await this.repo.update({ id }, userUpdate);
     } catch (err) {

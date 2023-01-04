@@ -1,6 +1,6 @@
 import { IsEmail, IsDefined, IsNotEmpty, MinLength } from 'class-validator';
 
-export class CreateUserDto {
+export class UpdateUser {
   @IsDefined()
   name: string;
 
@@ -23,4 +23,6 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   ward_id: number;
+
+  reset_token: string;
 }

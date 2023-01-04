@@ -6,4 +6,5 @@ export type UserType = {
   birthday: Date;
   wardId: number;
   gender: number;
+  reset_token: string;
 };

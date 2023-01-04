@@ -18,7 +18,10 @@ export class ForgotPasswordService {
   async forgotPassword(userMail: UserEmailDto) {
     const user = await this.userService.findUserByEmail(userMail.email);
     if (user) {
-      const token = this.jwtService.sign({ id: user.id });
+      const token = this.jwtService.sign(
+        { id: user.id },
+        { secret: process.env.JWT_SECRET_KEY }
+      );
       await this.userService.updateUserById(user.id, {
         ...user,
         reset_token: token
@@ -40,7 +43,9 @@ export class ForgotPasswordService {
 
   async resetPassword(token: string) {
     const newPassword = Math.random().toString(36).slice(-8);
-    const tokenVerified = this.jwtService.verify(token);
+    const tokenVerified = this.jwtService.verify(token, {
+      secret: process.env.JWT_SECRET_KEY
+    });
     if (tokenVerified) {
       const user = await this.userService.findUserByResetToken(token);
       if (user) {

@@ -45,7 +45,7 @@ export class User {
   @Column()
   ward_id: number;
 
-  @Column()
+  @Column({ nullable: true })
   reset_token: string;
 
   @Column({

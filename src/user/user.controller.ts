@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Delete,
   Param,
   ParseIntPipe
 } from '@nestjs/common';
@@ -29,19 +28,5 @@ export class UserController {
   async createUser(@Body() user: CreateUserDto) {
     const newUser = await this.userService.createUser(user);
     return newUser;
-  }
-
-  @Post(':id')
-  async updateUserById(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() user: CreateUserDto
-  ) {
-    const userUpdate = await this.userService.updateUserById(id, user);
-    return userUpdate;
-  }
-
-  @Delete(':id')
-  async deleteUserById(@Param('id', ParseIntPipe) id: number) {
-    return await this.userService.deleteUser(id);
   }
 }
