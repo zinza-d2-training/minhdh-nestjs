@@ -23,7 +23,7 @@ export class AuthController {
   }
 
   @Get('/token')
-  async checkToken(@Query() { token }: { token: string }) {
+  async getUserInfo(@Query() { token }: { token: string }) {
     return await this.authService.getUserInfo(token);
   }
 }
