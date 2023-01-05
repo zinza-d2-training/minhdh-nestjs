@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Post, Query, Request } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { AuthService } from './auth.service';
-import { UserType } from './type/loginType';
+import { loginDto } from './dto/loginDto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  async login(@Request() data: UserType) {
+  async login(@Request() data: loginDto) {
     return await this.authService.login(data);
   }
 
@@ -24,6 +24,6 @@ export class AuthController {
 
   @Get('/token')
   async checkToken(@Query() { token }: { token: string }) {
-    return await this.authService.checkToken(token);
+    return await this.authService.getUserInfo(token);
   }
 }

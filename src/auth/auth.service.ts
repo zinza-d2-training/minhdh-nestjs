@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcryptjs';
-import { UserType } from './type/loginType';
+import { loginDto } from './dto/loginDto';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { Repository } from 'typeorm';
 import { User } from 'src/typeorm/entities/User';
@@ -18,22 +18,18 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    try {
-      const user = await this.userService.findUserByEmail(email);
-      if (user) {
-        const is_equal = await bcrypt.compare(password, user.password);
-        if (is_equal) {
-          return user;
-        }
-      } else {
-        return null;
+    const user = await this.userService.findUserByEmail(email);
+    if (user) {
+      const is_equal = await bcrypt.compare(password, user.password);
+      if (is_equal) {
+        return user;
       }
-    } catch (err) {
-      throw new Error(err);
+    } else {
+      return null;
     }
   }
 
-  async login(user: UserType) {
+  async login(user: loginDto) {
     const token = this.jwtService.sign(
       { id: user.id, email: user.email },
       {
@@ -48,8 +44,6 @@ export class AuthService {
       const userExist = await this.userService.findUserByIdentityCard(
         user.identity_card_number
       );
-      console.log(userExist);
-
       if (!userExist) {
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(user.password, salt);
@@ -72,7 +66,7 @@ export class AuthService {
     return { message: 'Logout success' };
   }
 
-  async checkToken(token: string) {
+  async getUserInfo(token: string) {
     try {
       if (token) {
         const payload = await this.jwtService.verify(token, {
@@ -81,7 +75,7 @@ export class AuthService {
         if (payload) {
           const user = await this.userService.findUserById(payload.id);
           if (user) {
-            return { user: user, isAdmin: payload.isAdmin !== 0 };
+            return { user: user, isAdmin: payload.isAdmin == 0 };
           }
         }
       } else {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Province } from 'src/typeorm/entities/Province';
@@ -19,7 +19,7 @@ export class AdministrativeUnitService {
     try {
       return await this.repoProvince.find();
     } catch (error) {
-      throw new Error(error);
+      throw new HttpException('Not found provinces', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -27,7 +27,7 @@ export class AdministrativeUnitService {
     try {
       return await this.repoDistrict.find({ where: { province_id: id } });
     } catch (error) {
-      throw new Error(error);
+      throw new HttpException('Not found districts', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -35,7 +35,7 @@ export class AdministrativeUnitService {
     try {
       return await this.repoWard.find({ where: { district_id: id } });
     } catch (error) {
-      throw new Error(error);
+      throw new HttpException('Not found ward', HttpStatus.NOT_FOUND);
     }
   }
 

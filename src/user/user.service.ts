@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUser } from './dtos/update-user.dto';
 @Injectable()
 export class UserService {
@@ -13,7 +12,7 @@ export class UserService {
       const allUsers = await this.repo.find();
       return allUsers;
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -23,7 +22,7 @@ export class UserService {
         where: { id }
       });
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -35,7 +34,7 @@ export class UserService {
         }
       });
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -47,7 +46,7 @@ export class UserService {
         }
       });
     } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -59,16 +58,7 @@ export class UserService {
         }
       });
     } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  async createUser(newUser: CreateUserDto) {
-    try {
-      const user = this.repo.create(newUser);
-      return await this.repo.save(user);
-    } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -76,15 +66,7 @@ export class UserService {
     try {
       return await this.repo.update({ id }, userUpdate);
     } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  async deleteUser(id: number) {
-    try {
-      return await this.repo.delete({ id });
-    } catch (err) {
-      throw new Error(err);
+      throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
     }
   }
 }
