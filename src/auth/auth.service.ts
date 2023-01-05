@@ -79,7 +79,7 @@ export class AuthService {
           secret: process.env.JWT_SECRET_KEY
         });
         if (payload) {
-          const user = await this.userService.findOne(payload.id);
+          const user = await this.userService.findUserById(payload.id);
           if (user) {
             return { user: user, isAdmin: payload.isAdmin !== 0 };
           }
