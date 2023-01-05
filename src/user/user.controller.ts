@@ -20,7 +20,7 @@ export class UserController {
 
   @Get(':id')
   async getUserById(@Param('id', ParseIntPipe) id: number) {
-    const user = await this.userService.findOne(id);
+    const user = await this.userService.findUserById(id);
     return user;
   }
 
