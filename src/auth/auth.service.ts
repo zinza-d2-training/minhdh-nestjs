@@ -75,7 +75,7 @@ export class AuthService {
         if (payload) {
           const user = await this.userService.findUserById(payload.id);
           if (user) {
-            return { user: user, isAdmin: payload.isAdmin == 0 };
+            return { user: user };
           }
         }
       } else {

@@ -15,8 +15,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+  @Column({ default: 0 })
+  isAdmin: number;
 
   @Column()
   name: string;
