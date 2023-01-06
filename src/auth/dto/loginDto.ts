@@ -1,6 +1,9 @@
-import { IsEmail, IsDefined, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsDefined, IsNotEmpty } from 'class-validator';
 
-export class CreateUserDto {
+export class loginDto {
+  @IsNotEmpty()
+  id: number;
+
   @IsDefined()
   name: string;
 
@@ -11,10 +14,6 @@ export class CreateUserDto {
   @IsDefined()
   identity_card_number: string;
 
-  @IsDefined()
-  @MinLength(8)
-  password: string;
-
   @IsNotEmpty()
   birthday: Date;
 
@@ -23,4 +22,6 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   ward_id: number;
+
+  reset_token: string;
 }

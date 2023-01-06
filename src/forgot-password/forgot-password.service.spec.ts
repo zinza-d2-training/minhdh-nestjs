@@ -6,7 +6,7 @@ describe('ForgotPasswordService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ForgotPasswordService],
+      providers: [ForgotPasswordService]
     }).compile();
 
     service = module.get<ForgotPasswordService>(ForgotPasswordService);

@@ -15,8 +15,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+  @Column({ default: 0 })
+  isAdmin: number;
 
   @Column()
   name: string;
@@ -45,7 +45,7 @@ export class User {
   @Column()
   ward_id: number;
 
-  @Column()
+  @Column({ nullable: true })
   reset_token: string;
 
   @Column({

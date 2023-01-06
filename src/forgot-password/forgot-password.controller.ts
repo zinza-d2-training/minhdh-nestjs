@@ -11,7 +11,7 @@ export class ForgotPasswordController {
     return await this.forgotPasswordService.forgotPassword(userEmailDto);
   }
 
-  @Get('/reset/:token')
+  @Get('reset/:token')
   async resetPassword(@Param('token') token: string) {
     return this.forgotPasswordService.resetPassword(token);
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Province } from 'src/typeorm/entities/Province';
@@ -14,6 +14,30 @@ export class AdministrativeUnitService {
     @InjectRepository(District) private repoDistrict: Repository<District>,
     @InjectRepository(Ward) private repoWard: Repository<Ward>
   ) {}
+
+  async getProvinces() {
+    try {
+      return await this.repoProvince.find();
+    } catch (error) {
+      throw new HttpException('Not found provinces', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async getDistricts(id: number) {
+    try {
+      return await this.repoDistrict.find({ where: { province_id: id } });
+    } catch (error) {
+      throw new HttpException('Not found districts', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async getWards(id: number) {
+    try {
+      return await this.repoWard.find({ where: { district_id: id } });
+    } catch (error) {
+      throw new HttpException('Not found ward', HttpStatus.NOT_FOUND);
+    }
+  }
 
   @Command('excel', { desc: 'import data' })
   async importData(_cli: ConsoleIO) {

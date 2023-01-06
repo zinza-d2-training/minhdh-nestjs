@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { RolesGuard } from './roles.guard';
 import { AuthController } from './auth.controller';
@@ -16,8 +15,8 @@ import { User } from 'src/typeorm/entities/User';
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '10m' }
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '1h' }
     })
   ],
   providers: [AuthService, RolesGuard, JwtStrategy],
