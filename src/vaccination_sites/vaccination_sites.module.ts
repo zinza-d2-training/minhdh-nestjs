@@ -1,4 +1,3 @@
-import { Province } from './../typeorm/entities/Province';
 import { Module } from '@nestjs/common';
 import { VaccinationSitesController } from './vaccination_sites.controller';
 import { VaccinationSitesService } from './vaccination_sites.service';
@@ -8,9 +7,7 @@ import { District } from 'src/typeorm/entities/District';
 import { Ward } from 'src/typeorm/entities/Ward';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([VaccinationSites, Province, District, Ward])
-  ],
+  imports: [TypeOrmModule.forFeature([VaccinationSites, District, Ward])],
   controllers: [VaccinationSitesController],
   providers: [VaccinationSitesService]
 })

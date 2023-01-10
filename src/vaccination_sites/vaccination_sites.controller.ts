@@ -25,11 +25,6 @@ export class VaccinationSitesController {
     return await this.vaccinationSitesService.findAllWithCondition(queryData);
   }
 
-  @Get(':id')
-  async findByWardId(@Param('id', ParseIntPipe) id: number) {
-    return await this.vaccinationSitesService.findByWardId(id);
-  }
-
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   @Roles(Role.Admin)

@@ -1,4 +1,3 @@
-import { Province } from './../typeorm/entities/Province';
 import { isEmpty } from './../utils/validate';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
@@ -14,29 +13,9 @@ export class VaccinationSitesService {
   constructor(
     @InjectRepository(VaccinationSites)
     private repoVaccinationSites: Repository<VaccinationSites>,
-    @InjectRepository(Province) private repoProvince: Repository<Province>,
     @InjectRepository(District) private repoDistrict: Repository<District>,
     @InjectRepository(Ward) private repoWard: Repository<Ward>
   ) {}
-
-  async findByWardId(id: number) {
-    try {
-      const ward = await this.repoWard.findOne({ where: { id: id } });
-      const district = await this.repoDistrict.findOne({
-        where: { id: ward.district_id }
-      });
-      const province = await this.repoProvince.findOne({
-        where: { id: district.province_id }
-      });
-      return {
-        wardName: ward.name,
-        districtName: district.name,
-        provinceName: province.name
-      };
-    } catch (err) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-    }
-  }
 
   async findAllWithCondition(condition: SearchVaccinationSitesDto) {
     try {
