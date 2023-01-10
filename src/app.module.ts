@@ -9,6 +9,7 @@ import { AdministrativeUnitModule } from './administrative-unit/administrative-u
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,7 +20,8 @@ import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
     ConsoleModule,
     AdministrativeUnitModule,
     AuthModule,
-    ForgotPasswordModule
+    ForgotPasswordModule,
+    VaccinationSitesModule
   ],
   controllers: [AppController],
   providers: [AppService]

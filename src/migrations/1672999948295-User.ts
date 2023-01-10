@@ -5,7 +5,7 @@ import {
   TableForeignKey
 } from 'typeorm';
 
-export class User1671691725186 implements MigrationInterface {
+export class User1672999948295 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -61,7 +61,7 @@ export class User1671691725186 implements MigrationInterface {
           },
           {
             name: 'isAdmin',
-            type: 'tinyint',
+            type: 'int',
             default: 0
           },
           {

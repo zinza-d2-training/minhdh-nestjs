@@ -16,11 +16,7 @@ export class AdministrativeUnitService {
   ) {}
 
   async getProvinces() {
-    try {
-      return await this.repoProvince.find();
-    } catch (error) {
-      throw new HttpException('Not found provinces', HttpStatus.NOT_FOUND);
-    }
+    return await this.repoProvince.find();
   }
 
   async getDistricts(id: number) {
@@ -31,12 +27,20 @@ export class AdministrativeUnitService {
     }
   }
 
+  async getAllDistricts() {
+    return await this.repoDistrict.find();
+  }
+
   async getWards(id: number) {
     try {
       return await this.repoWard.find({ where: { district_id: id } });
     } catch (error) {
       throw new HttpException('Not found ward', HttpStatus.NOT_FOUND);
     }
+  }
+
+  async getAllWards() {
+    return await this.repoWard.find();
   }
 
   @Command('excel', { desc: 'import data' })
