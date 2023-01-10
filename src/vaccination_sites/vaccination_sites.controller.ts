@@ -1,6 +1,6 @@
-import { SearchDto } from './dto/searchVaccinationSites-dto';
+import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { Role } from './../auth/role.enum';
-import { VaccinationSitesDto } from './dto/vaccinationSite-dto';
+import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
 import {
   Body,
   Controller,
@@ -21,7 +21,7 @@ export class VaccinationSitesController {
   constructor(private vaccinationSitesService: VaccinationSitesService) {}
 
   @Get()
-  async findAll(@Query() queryData: SearchDto) {
+  async findAll(@Query() queryData: SearchVaccinationSitesDto) {
     return await this.vaccinationSitesService.findAllWithCondition(queryData);
   }
 

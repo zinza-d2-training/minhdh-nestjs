@@ -1,7 +1,7 @@
 import { Province } from './../typeorm/entities/Province';
 import { isEmpty } from './../utils/validate';
-import { SearchDto } from './dto/searchVaccinationSites-dto';
-import { VaccinationSitesDto } from './dto/vaccinationSite-dto';
+import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
+import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VaccinationSites } from 'src/typeorm/entities/VaccinationSites';
@@ -38,7 +38,7 @@ export class VaccinationSitesService {
     }
   }
 
-  async findAllWithCondition(condition: SearchDto) {
+  async findAllWithCondition(condition: SearchVaccinationSitesDto) {
     try {
       if (!isEmpty(condition.province_id)) {
         if (!isEmpty(condition.district_id)) {

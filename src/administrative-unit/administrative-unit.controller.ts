@@ -14,8 +14,18 @@ export class AdministrativeUnitController {
     return await this.adminService.getDistricts(id);
   }
 
+  @Get('all-districts')
+  async findAllDistricts() {
+    return await this.adminService.getAllDistricts();
+  }
+
   @Get('wards/:id')
   async findWard(@Param('id', ParseIntPipe) id: number) {
     return await this.adminService.getWards(id);
+  }
+
+  @Get('all-wards')
+  async findAllWards() {
+    return await this.adminService.getAllWards();
   }
 }
