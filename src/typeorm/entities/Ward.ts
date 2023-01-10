@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { District } from './District';
 import { User } from './User';
+import { VaccinationSites } from './VaccinationSites';
 
 @Entity('wards')
 export class Ward {
@@ -27,6 +28,12 @@ export class Ward {
 
   @OneToMany(() => User, (user) => user.ward)
   users: User[];
+
+  @OneToMany(
+    () => VaccinationSites,
+    (vaccinationSites) => vaccinationSites.ward
+  )
+  vaccinationSites: VaccinationSites[];
 
   @Column({
     type: 'timestamp',
