@@ -1,3 +1,4 @@
+import { VaccineRegistration } from './VaccineRegistration';
 import { Exclude } from 'class-transformer';
 import { IsEmail } from 'class-validator';
 import {
@@ -6,7 +7,8 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
 import { Ward } from './Ward';
 
@@ -47,6 +49,12 @@ export class User {
 
   @Column({ nullable: true })
   reset_token: string;
+
+  @OneToMany(
+    () => VaccineRegistration,
+    (vaccineRegistration) => vaccineRegistration.user
+  )
+  vaccineRegistrations: VaccineRegistration[];
 
   @Column({
     type: 'timestamp',

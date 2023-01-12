@@ -20,9 +20,14 @@ import { RolesGuard } from 'src/auth/roles.guard';
 export class VaccinationSitesController {
   constructor(private vaccinationSitesService: VaccinationSitesService) {}
 
-  @Get()
-  async findAll(@Query() queryData: SearchVaccinationSitesDto) {
+  @Get('/condition')
+  async findAllWithCondition(@Query() queryData: SearchVaccinationSitesDto) {
     return await this.vaccinationSitesService.findAllWithCondition(queryData);
+  }
+
+  @Get()
+  async findAll() {
+    return await this.vaccinationSitesService.findAll();
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -33,7 +38,7 @@ export class VaccinationSitesController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post()
+  @Post(':id')
   @Roles(Role.Admin)
   async update(
     @Param('id', ParseIntPipe) id: number,

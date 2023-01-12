@@ -17,6 +17,10 @@ export class VaccinationSitesService {
     @InjectRepository(Ward) private repoWard: Repository<Ward>
   ) {}
 
+  async findAll() {
+    return await this.repoVaccinationSites.find();
+  }
+
   async findAllWithCondition(condition: SearchVaccinationSitesDto) {
     try {
       if (!isEmpty(condition.province_id)) {
