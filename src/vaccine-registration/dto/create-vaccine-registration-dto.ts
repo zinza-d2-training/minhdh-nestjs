@@ -12,7 +12,7 @@ export class CreateVaccineRegistrationDto {
   job: string;
 
   @IsNotEmpty()
-  word_unit: string;
+  work_unit: string;
 
   @IsNotEmpty()
   date_injection: Date;

@@ -17,12 +17,17 @@ export class VaccineRegistrationService {
   }
 
   async findById(id: number) {
-    return await this.repoVaccineRegistration.findOne({ where: { id } });
+    try {
+      return await this.repoVaccineRegistration.findOne({ where: { id } });
+    } catch (err) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   async create(newData: CreateVaccineRegistrationDto) {
     try {
-      return await this.repoVaccineRegistration.save(newData);
+      const newRegistration = this.repoVaccineRegistration.create(newData);
+      return await this.repoVaccineRegistration.save(newRegistration);
     } catch (err) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }

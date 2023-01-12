@@ -28,8 +28,8 @@ export class GroupController {
     return await this.groupService.findOneById(id);
   }
 
-  @Roles(Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   async create(@Body() newData: GroupDto) {
     return await this.groupService.create(newData);

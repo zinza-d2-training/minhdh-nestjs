@@ -25,7 +25,8 @@ export class GroupService {
 
   async create(newData: GroupDto) {
     try {
-      return await this.repoGroup.save(newData);
+      const newGroup = this.repoGroup.create(newData);
+      return await this.repoGroup.save(newGroup);
     } catch (error) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }
