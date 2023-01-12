@@ -26,9 +26,5 @@ export class CreateVaccineRegistrationDto {
 
   @IsNotEmpty()
   @IsNumber()
-  vaccine_id: number;
-
-  @IsNotEmpty()
-  @IsNumber()
   group_id: number;
 }
