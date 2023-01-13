@@ -1,3 +1,4 @@
+import { VaccinationSites } from './VaccinationSites';
 import { Group } from './Group';
 import { Vaccine } from './Vaccine';
 import {
@@ -39,8 +40,11 @@ export class VaccineRegistration {
   @Column()
   group_id: number;
 
-  @Column()
+  @Column({ nullable: true })
   vaccine_id: number;
+
+  @Column({ nullable: true })
+  vaccination_site_id: number;
 
   @ManyToOne(() => User, (user) => user.vaccineRegistrations)
   @JoinColumn({ name: 'user_id' })
@@ -53,6 +57,13 @@ export class VaccineRegistration {
   @ManyToOne(() => Group, (group) => group.vaccineRegistrations)
   @JoinColumn({ name: 'group_id' })
   group: Group;
+
+  @ManyToOne(
+    () => VaccinationSites,
+    (vaccinationSite) => vaccinationSite.vaccineRegistrations
+  )
+  @JoinColumn({ name: 'vaccination_site_id' })
+  vaccinationSite: VaccinationSites;
 
   @Column({
     type: 'timestamp',

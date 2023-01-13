@@ -1,3 +1,4 @@
+import { UpdateSitesDto } from './dto/update-sites-dto';
 import { isEmpty } from './../utils/validate';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
@@ -102,7 +103,7 @@ export class VaccinationSitesService {
     }
   }
 
-  async updateVaccinationSiteById(id: number, dataUpdate: VaccinationSitesDto) {
+  async updateVaccinationSiteById(id: number, dataUpdate: UpdateSitesDto) {
     try {
       return await this.repoVaccinationSites.update({ id }, dataUpdate);
     } catch (err) {

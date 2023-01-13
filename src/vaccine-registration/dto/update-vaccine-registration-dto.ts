@@ -22,4 +22,7 @@ export class UpdateVaccineRegistrationDto {
 
   @IsNumber()
   group_id: number;
+
+  @IsNumber()
+  vaccination_site_id: number;
 }

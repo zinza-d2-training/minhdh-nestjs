@@ -1,3 +1,4 @@
+import { UpdateSitesDto } from './dto/update-sites-dto';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { Role } from './../auth/role.enum';
 import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
@@ -54,7 +55,7 @@ export class VaccinationSitesController {
   @Roles(Role.Admin)
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updatedSite: VaccinationSitesDto
+    @Body() updatedSite: UpdateSitesDto
   ) {
     return await this.vaccinationSitesService.updateVaccinationSiteById(
       id,
