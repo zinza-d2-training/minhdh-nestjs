@@ -26,8 +26,7 @@ export class VaccineRegistrationService {
 
   async create(newData: CreateVaccineRegistrationDto) {
     try {
-      const newRegistration = this.repoVaccineRegistration.create(newData);
-      return await this.repoVaccineRegistration.save(newRegistration);
+      return await this.repoVaccineRegistration.save(newData);
     } catch (err) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }

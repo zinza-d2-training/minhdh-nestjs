@@ -26,13 +26,11 @@ export class VaccineRegistrationController {
     return await this.vaccineRegistrationService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number) {
     return await this.vaccineRegistrationService.findById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() newData: CreateVaccineRegistrationDto) {
     return await this.vaccineRegistrationService.create(newData);

@@ -23,42 +23,57 @@ export class VaccinationSitesService {
 
   async findAllWithCondition(condition: SearchVaccinationSitesDto) {
     try {
-      if (!isEmpty(condition.province_id)) {
-        if (!isEmpty(condition.district_id)) {
-          if (!isEmpty(condition.ward_id)) {
+      const { province_id, district_id, ward_id } = condition;
+      if (!isEmpty(province_id)) {
+        if (!isEmpty(district_id)) {
+          if (!isEmpty(ward_id)) {
             return await this.repoVaccinationSites.find({
-              where: { ward_id: condition.ward_id }
+              where: { ward_id: ward_id }
             });
           } else {
             const listWards = await this.repoWard.find({
-              where: { district_id: condition.district_id }
+              where: { district_id: district_id }
             });
             const listVaccineSites = [];
-            listWards.forEach(async (ward) => {
-              const vaccineSites = await this.repoVaccinationSites.find({
-                where: { ward_id: ward.id }
-              });
-              listVaccineSites.push(...vaccineSites);
+            const vaccinationSites = await this.repoVaccinationSites.find();
+            listWards.forEach((ward) => {
+              const findVaccineSites = vaccinationSites.filter(
+                (vaccinationSite) => {
+                  return vaccinationSite.ward_id === ward.id;
+                }
+              );
+              if (findVaccineSites) {
+                listVaccineSites.push(...findVaccineSites);
+              }
             });
             return listVaccineSites;
           }
         } else {
           const districts = await this.repoDistrict.find({
-            where: { province_id: condition.province_id }
+            where: { province_id: province_id }
           });
           const listWards = [];
-          districts.forEach(async (district) => {
-            const wards = await this.repoWard.find({
-              where: { district_id: district.id }
+          const wards = await this.repoWard.find();
+          districts.forEach((district) => {
+            const findWards = wards.filter((ward) => {
+              return ward.district_id === district.id;
             });
-            listWards.push(...wards);
+            if (findWards) {
+              listWards.push(...findWards);
+            }
           });
+          console.log(listWards);
           const listVaccineSites = [];
-          listWards.forEach(async (ward) => {
-            const vaccineSites = await this.repoVaccinationSites.find({
-              where: { ward_id: ward.id }
-            });
-            listVaccineSites.push(...vaccineSites);
+          const vaccinationSites = await this.repoVaccinationSites.find();
+          listWards.forEach((ward) => {
+            const findVaccineSites = vaccinationSites.filter(
+              (vaccinationSite) => {
+                return vaccinationSite.ward_id === ward.id;
+              }
+            );
+            if (findVaccineSites) {
+              listVaccineSites.push(...findVaccineSites);
+            }
           });
           return listVaccineSites;
         }

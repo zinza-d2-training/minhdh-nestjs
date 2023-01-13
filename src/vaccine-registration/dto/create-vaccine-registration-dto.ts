@@ -1,8 +1,7 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateVaccineRegistrationDto {
   @IsNotEmpty()
-  @IsNumber()
   numBHYT: number;
 
   @IsNotEmpty()
@@ -21,10 +20,8 @@ export class CreateVaccineRegistrationDto {
   session_injection: string;
 
   @IsNotEmpty()
-  @IsNumber()
   user_id: number;
 
   @IsNotEmpty()
-  @IsNumber()
   group_id: number;
 }
