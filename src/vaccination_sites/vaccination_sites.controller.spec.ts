@@ -6,10 +6,12 @@ describe('VaccinationSitesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [VaccinationSitesController],
+      controllers: [VaccinationSitesController]
     }).compile();
 
-    controller = module.get<VaccinationSitesController>(VaccinationSitesController);
+    controller = module.get<VaccinationSitesController>(
+      VaccinationSitesController
+    );
   });
 
   it('should be defined', () => {

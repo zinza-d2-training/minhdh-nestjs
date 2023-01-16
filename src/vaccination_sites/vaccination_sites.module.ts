@@ -5,10 +5,11 @@ import { VaccinationSites } from 'src/typeorm/entities/VaccinationSites';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { District } from 'src/typeorm/entities/District';
 import { Ward } from 'src/typeorm/entities/Ward';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([VaccinationSites, District, Ward])],
   controllers: [VaccinationSitesController],
-  providers: [VaccinationSitesService]
+  providers: [VaccinationSitesService, RolesGuard]
 })
 export class VaccinationSitesModule {}

@@ -10,6 +10,9 @@ import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
+import { VaccineRegistrationModule } from './vaccine-registration/vaccine-registration.module';
+import { GroupModule } from './group/group.module';
+import { VaccineModule } from './vaccine/vaccine.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,7 +24,10 @@ import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.mo
     AdministrativeUnitModule,
     AuthModule,
     ForgotPasswordModule,
-    VaccinationSitesModule
+    VaccinationSitesModule,
+    VaccineRegistrationModule,
+    GroupModule,
+    VaccineModule
   ],
   controllers: [AppController],
   providers: [AppService]
