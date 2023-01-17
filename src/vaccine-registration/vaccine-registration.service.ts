@@ -24,6 +24,16 @@ export class VaccineRegistrationService {
     }
   }
 
+  async findByUserId(id: number) {
+    try {
+      return await this.repoVaccineRegistration.findOne({
+        where: { user_id: id }
+      });
+    } catch (err) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async create(newData: CreateVaccineRegistrationDto) {
     try {
       return await this.repoVaccineRegistration.save(newData);

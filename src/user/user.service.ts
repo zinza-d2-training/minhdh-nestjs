@@ -1,6 +1,8 @@
+import { isEmpty } from './../utils/validate';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcryptjs';
 import { User } from 'src/typeorm/entities/User';
 import { UpdateUser } from './dtos/update-user.dto';
 @Injectable()
@@ -64,7 +66,19 @@ export class UserService {
 
   async updateUserById(id: number, userUpdate: UpdateUser) {
     try {
-      return await this.repo.update({ id }, userUpdate);
+      if (!isEmpty(userUpdate.password)) {
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(userUpdate.password, salt);
+        return await this.repo.update(
+          { id },
+          {
+            ...userUpdate,
+            password: hashPassword
+          }
+        );
+      } else {
+        return await this.repo.update({ id }, userUpdate);
+      }
     } catch (err) {
       throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
     }

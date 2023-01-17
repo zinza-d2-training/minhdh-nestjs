@@ -1,5 +1,5 @@
 import { UpdateSitesDto } from './dto/update-sites-dto';
-import { isEmpty } from './../utils/validate';
+import { isEmpty } from '../utils/validate';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -63,7 +63,6 @@ export class VaccinationSitesService {
               listWards.push(...findWards);
             }
           });
-          console.log(listWards);
           const listVaccineSites = [];
           const vaccinationSites = await this.repoVaccinationSites.find();
           listWards.forEach((ward) => {
@@ -105,7 +104,8 @@ export class VaccinationSitesService {
 
   async updateVaccinationSiteById(id: number, dataUpdate: UpdateSitesDto) {
     try {
-      return await this.repoVaccinationSites.update({ id }, dataUpdate);
+      await this.repoVaccinationSites.update({ id }, dataUpdate);
+      return await this.repoVaccinationSites.find();
     } catch (err) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }

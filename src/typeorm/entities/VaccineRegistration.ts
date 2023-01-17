@@ -16,22 +16,22 @@ export class VaccineRegistration {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   numBHYT: number;
 
-  @Column()
+  @Column({ nullable: true })
   job: string;
 
-  @Column()
+  @Column({ nullable: true })
   work_unit: string;
 
-  @Column()
+  @Column({ nullable: true })
   address: string;
 
-  @Column()
+  @Column({ nullable: true })
   date_injection: Date;
 
-  @Column()
+  @Column({ nullable: true })
   session_injection: string;
 
   @Column()

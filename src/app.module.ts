@@ -9,7 +9,7 @@ import { AdministrativeUnitModule } from './administrative-unit/administrative-u
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
-import { VaccinationSitesModule } from './vaccination_sites/vaccination_sites.module';
+import { VaccinationSitesModule } from './vaccination_sites/vaccination-sites.module';
 import { VaccineRegistrationModule } from './vaccine-registration/vaccine-registration.module';
 import { GroupModule } from './group/group.module';
 import { VaccineModule } from './vaccine/vaccine.module';

@@ -4,9 +4,15 @@ import { VaccineRegistrationController } from './vaccine-registration.controller
 import { VaccineRegistrationService } from './vaccine-registration.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([VaccineRegistration])],
+  imports: [
+    TypeOrmModule.forFeature([VaccineRegistration]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET_KEY
+    })
+  ],
   controllers: [VaccineRegistrationController],
   providers: [VaccineRegistrationService, RolesGuard]
 })
