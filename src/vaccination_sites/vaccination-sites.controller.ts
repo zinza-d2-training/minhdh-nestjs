@@ -1,6 +1,6 @@
 import { UpdateSitesDto } from './dto/update-sites-dto';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
-import { Role } from './../auth/role.enum';
+import { Role } from '../auth/role.enum';
 import { VaccinationSitesDto } from './dto/vaccination-sites-dto';
 import {
   Body,
@@ -10,11 +10,9 @@ import {
   UseGuards,
   ParseIntPipe,
   Param,
-  Query,
-  UsePipes,
-  ValidationPipe
+  Query
 } from '@nestjs/common';
-import { VaccinationSitesService } from './vaccination_sites.service';
+import { VaccinationSitesService } from './vaccination-sites.service';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -23,7 +21,6 @@ import { RolesGuard } from 'src/auth/roles.guard';
 export class VaccinationSitesController {
   constructor(private vaccinationSitesService: VaccinationSitesService) {}
 
-  @UsePipes(new ValidationPipe())
   @Get('condition')
   async findAllWithCondition(
     @Query('province_id') province_id: number | null | undefined,
@@ -50,9 +47,9 @@ export class VaccinationSitesController {
     return await this.vaccinationSitesService.createVaccinationSite(newSite);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post(':id')
+  @UseGuards(RolesGuard)
   @Roles(Role.Admin)
+  @Post(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatedSite: UpdateSitesDto

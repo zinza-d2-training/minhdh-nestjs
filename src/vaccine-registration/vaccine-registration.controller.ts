@@ -11,7 +11,6 @@ import {
   Body
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
 
@@ -19,9 +18,9 @@ import { RolesGuard } from 'src/auth/roles.guard';
 export class VaccineRegistrationController {
   constructor(private vaccineRegistrationService: VaccineRegistrationService) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get()
+  @UseGuards(RolesGuard)
   @Roles(Role.Admin)
+  @Get()
   async findAll() {
     return await this.vaccineRegistrationService.findAll();
   }
@@ -31,14 +30,19 @@ export class VaccineRegistrationController {
     return await this.vaccineRegistrationService.findById(id);
   }
 
+  @Get('user/:id')
+  async findByUserId(@Param('id', ParseIntPipe) id: number) {
+    return await this.vaccineRegistrationService.findByUserId(id);
+  }
+
   @Post()
   async create(@Body() newData: CreateVaccineRegistrationDto) {
     return await this.vaccineRegistrationService.create(newData);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post(':id')
+  @UseGuards(RolesGuard)
   @Roles(Role.Admin)
+  @Post(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: UpdateVaccineRegistrationDto
