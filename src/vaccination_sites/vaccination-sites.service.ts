@@ -1,3 +1,4 @@
+import { SearchSitesAdminDto } from './dto/search-sites-admin.dto';
 import { UpdateSitesDto } from './dto/update-sites-dto';
 import { isEmpty } from '../utils/validate';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
@@ -20,6 +21,27 @@ export class VaccinationSitesService {
 
   async findAll() {
     return await this.repoVaccinationSites.find();
+  }
+
+  async findAllByAdmin(condition: SearchSitesAdminDto) {
+    try {
+      const { name, address } = condition;
+      if (!isEmpty(name) && isEmpty(address)) {
+        return await this.repoVaccinationSites.find({ where: { name: name } });
+      } else if (!isEmpty(address) && isEmpty(name)) {
+        return await this.repoVaccinationSites.find({
+          where: { address: address }
+        });
+      } else if (!isEmpty(name) && !isEmpty(address)) {
+        return await this.repoVaccinationSites.find({
+          where: { name: name, address: address }
+        });
+      } else {
+        return await this.repoVaccinationSites.find();
+      }
+    } catch (err) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   async findAllWithCondition(condition: SearchVaccinationSitesDto) {
@@ -105,7 +127,7 @@ export class VaccinationSitesService {
   async updateVaccinationSiteById(id: number, dataUpdate: UpdateSitesDto) {
     try {
       await this.repoVaccinationSites.update({ id }, dataUpdate);
-      return await this.repoVaccinationSites.find();
+      return { msg: 'Updated successfully!' };
     } catch (err) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }

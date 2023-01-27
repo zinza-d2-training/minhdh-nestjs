@@ -13,7 +13,9 @@ export class VaccineRegistrationService {
   ) {}
 
   async findAll() {
-    return await this.repoVaccineRegistration.find();
+    return await this.repoVaccineRegistration.find({
+      relations: ['user', 'vaccine', 'vaccinationSite']
+    });
   }
 
   async findById(id: number) {
@@ -26,7 +28,7 @@ export class VaccineRegistrationService {
 
   async findByUserId(id: number) {
     try {
-      return await this.repoVaccineRegistration.findOne({
+      return await this.repoVaccineRegistration.find({
         where: { user_id: id }
       });
     } catch (err) {
@@ -44,7 +46,8 @@ export class VaccineRegistrationService {
 
   async update(id: number, newData: UpdateVaccineRegistrationDto) {
     try {
-      return await this.repoVaccineRegistration.update({ id }, newData);
+      await this.repoVaccineRegistration.update({ id }, newData);
+      return { msg: 'Updated successfully!' };
     } catch (err) {
       throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
     }
