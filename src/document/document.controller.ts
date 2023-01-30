@@ -1,3 +1,4 @@
+import { getFileHash } from './get-file-hash';
 import { UpdateDocumentDto } from './dto/update-document-dto';
 import { CreateDocumentDto } from './dto/create-document-dto';
 import { DocumentService } from './document.service';
@@ -46,10 +47,7 @@ export class DocumentController {
       storage: diskStorage({
         destination: './uploads',
         filename: (_, file, cb) => {
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
+          const randomName = getFileHash();
           cb(null, `${randomName}${extname(file.originalname)}`);
         }
       })
