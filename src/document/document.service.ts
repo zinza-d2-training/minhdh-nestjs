@@ -14,25 +14,20 @@ export class DocumentService {
     private repoDocument: Repository<Document>
   ) {}
 
-  async findAll() {
-    return await this.repoDocument.find();
-  }
-
-  async findOne(id: number) {
-    return await this.repoDocument.findOne({ where: { id: id } });
-  }
-
-  async findByName(condition: SearchDocumentDto) {
+  async findAll(condition: SearchDocumentDto) {
     try {
       const { name } = condition;
       if (!isEmpty(name)) {
         return await this.repoDocument.find({ where: { name: name } });
-      } else {
-        return await this.repoDocument.find();
       }
+      return await this.repoDocument.find();
     } catch (err) {
       throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  async findOne(id: number) {
+    return await this.repoDocument.findOne({ where: { id: id } });
   }
 
   async update(id: number, dataUpdate: UpdateDocumentDto) {
@@ -44,11 +39,18 @@ export class DocumentService {
     }
   }
 
-  async create(newData: CreateDocumentDto) {
+  async upload(file: Express.Multer.File, newData: CreateDocumentDto) {
     try {
-      return await this.repoDocument.save(newData);
+      const { filename } = file;
+      await this.repoDocument.save({
+        ...newData,
+        link: filename
+      });
+      return {
+        message: 'Uploaded successfully!'
+      };
     } catch (err) {
-      throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
+      throw new HttpException('Cannot upload', HttpStatus.NOT_ACCEPTABLE);
     }
   }
 }

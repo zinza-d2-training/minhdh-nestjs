@@ -29,7 +29,7 @@ export class UserController {
     return await this.userService.findUserById(id);
   }
 
-  @Post('info/:id')
+  @Post(':id')
   async updateInfo(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUser: UpdateInfoUser
@@ -37,7 +37,7 @@ export class UserController {
     return await this.userService.updateUserById(id, updateUser);
   }
 
-  @Post('password/:id')
+  @Post(':id/password')
   async updatePassword(
     @Param('id', ParseIntPipe) id: number,
     @Body() password: string

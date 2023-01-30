@@ -35,8 +35,8 @@ export class VaccinationSitesController {
     return await this.vaccinationSitesService.findAllWithCondition(queryData);
   }
 
-  @Get('condition/admin')
-  async findAllByAdmin(
+  @Get()
+  async findAll(
     @Query('name') name: string | null | undefined,
     @Query('address') address: string | null | undefined
   ) {
@@ -44,12 +44,7 @@ export class VaccinationSitesController {
       name,
       address
     };
-    return await this.vaccinationSitesService.findAllByAdmin(queryData);
-  }
-
-  @Get()
-  async findAll() {
-    return await this.vaccinationSitesService.findAll();
+    return await this.vaccinationSitesService.findAll(queryData);
   }
 
   @UseGuards(RolesGuard)
