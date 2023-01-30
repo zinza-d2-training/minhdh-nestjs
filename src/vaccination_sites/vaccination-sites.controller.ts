@@ -1,4 +1,3 @@
-import { SearchSitesAdminDto } from './dto/search-sites-admin.dto';
 import { UpdateSitesDto } from './dto/update-sites-dto';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
 import { Role } from '../auth/role.enum';
@@ -36,15 +35,8 @@ export class VaccinationSitesController {
   }
 
   @Get()
-  async findAll(
-    @Query('name') name: string | null | undefined,
-    @Query('address') address: string | null | undefined
-  ) {
-    const queryData: SearchSitesAdminDto = {
-      name,
-      address
-    };
-    return await this.vaccinationSitesService.findAll(queryData);
+  async findAll() {
+    return await this.vaccinationSitesService.findAll();
   }
 
   @UseGuards(RolesGuard)

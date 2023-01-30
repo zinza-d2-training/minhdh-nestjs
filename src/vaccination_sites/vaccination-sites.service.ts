@@ -1,4 +1,3 @@
-import { SearchSitesAdminDto } from './dto/search-sites-admin.dto';
 import { UpdateSitesDto } from './dto/update-sites-dto';
 import { isEmpty } from '../utils/validate';
 import { SearchVaccinationSitesDto } from './dto/search-vaccination-sites.dto';
@@ -19,25 +18,8 @@ export class VaccinationSitesService {
     @InjectRepository(Ward) private repoWard: Repository<Ward>
   ) {}
 
-  async findAll(condition: SearchSitesAdminDto) {
-    try {
-      const { name, address } = condition;
-      if (!isEmpty(name) && isEmpty(address)) {
-        return await this.repoVaccinationSites.find({ where: { name: name } });
-      } else if (!isEmpty(address) && isEmpty(name)) {
-        return await this.repoVaccinationSites.find({
-          where: { address: address }
-        });
-      } else if (!isEmpty(name) && !isEmpty(address)) {
-        return await this.repoVaccinationSites.find({
-          where: { name: name, address: address }
-        });
-      } else {
-        return await this.repoVaccinationSites.find();
-      }
-    } catch (err) {
-      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-    }
+  async findAll() {
+    return await this.repoVaccinationSites.find();
   }
 
   async findAllWithCondition(condition: SearchVaccinationSitesDto) {
