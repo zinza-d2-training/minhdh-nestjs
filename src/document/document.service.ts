@@ -1,5 +1,3 @@
-import { SearchDocumentDto } from './dto/search-document-dto';
-import { isEmpty } from './../utils/validate';
 import { CreateDocumentDto } from './dto/create-document-dto';
 import { UpdateDocumentDto } from './dto/update-document-dto';
 import { Document } from './../typeorm/entities/Document';
@@ -14,16 +12,8 @@ export class DocumentService {
     private repoDocument: Repository<Document>
   ) {}
 
-  async findAll(condition: SearchDocumentDto) {
-    try {
-      const { name } = condition;
-      if (!isEmpty(name)) {
-        return await this.repoDocument.find({ where: { name: name } });
-      }
-      return await this.repoDocument.find();
-    } catch (err) {
-      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
-    }
+  async findAll() {
+    return await this.repoDocument.find();
   }
 
   async findOne(id: number) {

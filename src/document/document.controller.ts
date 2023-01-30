@@ -1,5 +1,4 @@
 import { UpdateDocumentDto } from './dto/update-document-dto';
-import { SearchDocumentDto } from './dto/search-document-dto';
 import { CreateDocumentDto } from './dto/create-document-dto';
 import { DocumentService } from './document.service';
 import {
@@ -9,7 +8,6 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Query,
   Res,
   UploadedFile,
   UseGuards,
@@ -28,11 +26,8 @@ export class DocumentController {
   constructor(private documentService: DocumentService) {}
 
   @Get()
-  async findAll(@Query('name') name: string | null | undefined) {
-    const condition: SearchDocumentDto = {
-      name
-    };
-    return await this.documentService.findAll(condition);
+  async findAll() {
+    return await this.documentService.findAll();
   }
 
   @Roles(Role.Admin)
