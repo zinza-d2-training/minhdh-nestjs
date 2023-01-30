@@ -105,7 +105,7 @@ export class VaccinationSitesService {
   async updateVaccinationSiteById(id: number, dataUpdate: UpdateSitesDto) {
     try {
       await this.repoVaccinationSites.update({ id }, dataUpdate);
-      return await this.repoVaccinationSites.find();
+      return { msg: 'Updated successfully!' };
     } catch (err) {
       throw new HttpException('Cannot create', HttpStatus.NOT_ACCEPTABLE);
     }

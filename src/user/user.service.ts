@@ -1,18 +1,17 @@
-import { isEmpty } from './../utils/validate';
+import { UpdateUser } from './dtos/update-user.dto';
+import { UpdateInfoUser } from './dtos/update-info-user-dto';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/typeorm/entities/User';
-import { UpdateUser } from './dtos/update-user.dto';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
   async findAll() {
     try {
-      const allUsers = await this.repo.find();
-      return allUsers;
+      return await this.repo.find();
     } catch (err) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
@@ -64,21 +63,34 @@ export class UserService {
     }
   }
 
-  async updateUserById(id: number, userUpdate: UpdateUser) {
+  async updateUser(id: number, userUpdate: UpdateUser) {
     try {
-      if (!isEmpty(userUpdate.password)) {
-        const salt = bcrypt.genSaltSync(10);
-        const hashPassword = bcrypt.hashSync(userUpdate.password, salt);
-        return await this.repo.update(
-          { id },
-          {
-            ...userUpdate,
-            password: hashPassword
-          }
-        );
-      } else {
-        return await this.repo.update({ id }, userUpdate);
-      }
+      return this.repo.update({ id }, userUpdate);
+    } catch (err) {
+      throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
+    }
+  }
+
+  async updateUserById(id: number, userUpdate: UpdateInfoUser) {
+    try {
+      await this.repo.update({ id }, userUpdate);
+      return { msg: 'Updated successfully!!' };
+    } catch (err) {
+      throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
+    }
+  }
+
+  async updatePasswordUser(id: number, password: string) {
+    try {
+      const salt = bcrypt.genSaltSync(10);
+      const hashPassword = bcrypt.hashSync(password, salt);
+      await this.repo.update(
+        { id },
+        {
+          password: hashPassword
+        }
+      );
+      return { msg: 'Updated successfully!!' };
     } catch (err) {
       throw new HttpException('Cannot update', HttpStatus.NOT_ACCEPTABLE);
     }

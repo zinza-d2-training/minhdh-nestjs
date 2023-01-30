@@ -1,17 +1,29 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateVaccineRegistrationDto {
-  numBHYT: number;
+  numBHYT?: string | null | undefined;
 
-  address: string;
+  address?: string | null | undefined;
 
-  job: string;
+  job?: string | null | undefined;
 
-  work_unit: string;
+  work_unit?: string | null | undefined;
 
-  date_injection: Date;
+  date_injection?: Date | null | undefined;
 
-  session_injection: string;
+  session_injection?: string | null | undefined;
+
+  vaccine_code?: string | null | undefined;
+
+  vaccination_site_id?: number | null | undefined;
+
+  vaccine_id?: number | null | undefined;
+
+  @IsNotEmpty()
+  status: number;
+
+  @IsNotEmpty()
+  registration_code: string;
 
   @IsNotEmpty()
   user_id: number;

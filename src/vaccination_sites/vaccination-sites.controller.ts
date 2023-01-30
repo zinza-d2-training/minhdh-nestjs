@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { VaccinationSitesService } from './vaccination-sites.service';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('vaccination-sites')
@@ -40,7 +39,7 @@ export class VaccinationSitesController {
     return await this.vaccinationSitesService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   @Post()
   async create(@Body() newSite: VaccinationSitesDto) {

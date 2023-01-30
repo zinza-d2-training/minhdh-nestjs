@@ -22,7 +22,7 @@ export class ForgotPasswordService {
         { id: user.id },
         { secret: process.env.JWT_SECRET_KEY }
       );
-      await this.userService.updateUserById(user.id, {
+      await this.userService.updateUser(user.id, {
         ...user,
         reset_token: token
       });
@@ -50,7 +50,7 @@ export class ForgotPasswordService {
       const user = await this.userService.findUserByResetToken(token);
       if (user) {
         const hashPassword = bcrypt.hashSync(newPassword);
-        await this.userService.updateUserById(user.id, {
+        await this.userService.updateUser(user.id, {
           ...user,
           password: hashPassword,
           reset_token: null

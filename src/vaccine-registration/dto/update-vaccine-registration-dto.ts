@@ -1,8 +1,7 @@
 import { IsNumber } from 'class-validator';
 
 export class UpdateVaccineRegistrationDto {
-  @IsNumber()
-  numBHYT: number;
+  numBHYT: string;
 
   address: string;
 
@@ -13,6 +12,10 @@ export class UpdateVaccineRegistrationDto {
   date_injection: Date;
 
   session_injection: string;
+
+  vaccine_code: string;
+
+  status: number;
 
   @IsNumber()
   user_id: number;

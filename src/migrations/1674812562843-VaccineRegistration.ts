@@ -5,7 +5,7 @@ import {
   TableForeignKey
 } from 'typeorm';
 
-export class VaccineRegistration1673880217166 implements MigrationInterface {
+export class VaccineRegistration1674812562843 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -20,7 +20,8 @@ export class VaccineRegistration1673880217166 implements MigrationInterface {
           },
           {
             name: 'numbBHYT',
-            type: 'int',
+            type: 'varchar',
+            length: '255',
             isNullable: true
           },
           {
@@ -51,6 +52,21 @@ export class VaccineRegistration1673880217166 implements MigrationInterface {
             type: 'varchar',
             length: '255',
             isNullable: true
+          },
+          {
+            name: 'registration_code',
+            type: 'varchar',
+            length: '255'
+          },
+          {
+            name: 'vaccine_code',
+            type: 'varchar',
+            length: '255',
+            isNullable: true
+          },
+          {
+            name: 'status',
+            type: 'int'
           },
           {
             name: 'user_id',

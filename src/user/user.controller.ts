@@ -1,4 +1,4 @@
-import { UpdateUser } from './dtos/update-user.dto';
+import { UpdateInfoUser } from './dtos/update-info-user-dto';
 import {
   Body,
   Controller,
@@ -30,10 +30,18 @@ export class UserController {
   }
 
   @Post(':id')
-  async update(
+  async updateInfo(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateUser: UpdateUser
+    @Body() updateUser: UpdateInfoUser
   ) {
     return await this.userService.updateUserById(id, updateUser);
+  }
+
+  @Post(':id/password')
+  async updatePassword(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() password: string
+  ) {
+    return await this.userService.updatePasswordUser(id, password);
   }
 }

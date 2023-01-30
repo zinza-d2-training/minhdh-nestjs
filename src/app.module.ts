@@ -13,6 +13,7 @@ import { VaccinationSitesModule } from './vaccination_sites/vaccination-sites.mo
 import { VaccineRegistrationModule } from './vaccine-registration/vaccine-registration.module';
 import { GroupModule } from './group/group.module';
 import { VaccineModule } from './vaccine/vaccine.module';
+import { DocumentModule } from './document/document.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +28,8 @@ import { VaccineModule } from './vaccine/vaccine.module';
     VaccinationSitesModule,
     VaccineRegistrationModule,
     GroupModule,
-    VaccineModule
+    VaccineModule,
+    DocumentModule
   ],
   controllers: [AppController],
   providers: [AppService]

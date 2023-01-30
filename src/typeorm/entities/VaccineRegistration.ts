@@ -17,7 +17,7 @@ export class VaccineRegistration {
   id: number;
 
   @Column({ nullable: true })
-  numBHYT: number;
+  numBHYT: string;
 
   @Column({ nullable: true })
   job: string;
@@ -33,6 +33,15 @@ export class VaccineRegistration {
 
   @Column({ nullable: true })
   session_injection: string;
+
+  @Column()
+  registration_code: string;
+
+  @Column({ nullable: true })
+  vaccine_code: string;
+
+  @Column()
+  status: number;
 
   @Column()
   user_id: number;
