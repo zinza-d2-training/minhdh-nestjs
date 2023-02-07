@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: db_minh
+    restart: always
+    hostname: mysql
+    volumes:
+      - db_minh-vol:/var/lib/mysql
+    networks:
+      - minhdh-network
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB}
+      MYSQL_ROOT_PASSWORD: ${PASS}
+
+  app:
+    image: node:18-alpine
+    container_name: minhdh-nestjs
+    networks:
+      - minhdh-network
+    ports:
+      - ${PORT_APPLICATION}:${PORT_APPLICATION}
+    command: sh -c "npm install -f && npm run build && node cli excel && npm run start"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USERNAME: ${USER}
+      MYSQL_PASSWORD: ${PASSWORD}
+      MYSQL_NAME: ${DB}
+
+volumes:
+  db_minh-vol:
+
+networks:
+  minhdh-network:
+    driver: bridge
