@@ -22,7 +22,7 @@ services:
       - minhdh-network
     ports:
       - ${PORT_APPLICATION}:${PORT_APPLICATION}
-    command: sh -c "npm install -f && npm run build && node cli excel && npm run start"
+    command: sh -c "npm install -g npm@9.4.2 && npm install -f && npm run build && node cli excel && npm run start"
     working_dir: /app
     volumes:
       - ./:/app
@@ -31,7 +31,7 @@ services:
     environment:
       MYSQL_HOST: mysql
       MYSQL_USERNAME: ${USER}
-      MYSQL_PASSWORD: ${PASSWORD}
+      MYSQL_PASSWORD: ${PASS}
       MYSQL_NAME: ${DB}
 
 volumes:
