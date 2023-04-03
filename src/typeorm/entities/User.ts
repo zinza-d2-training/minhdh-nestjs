@@ -8,9 +8,12 @@ import {
   Timestamp,
   ManyToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  ManyToMany
 } from 'typeorm';
 import { Ward } from './Ward';
+import { Chat } from './Chat';
+import { Message } from './Message';
 
 @Entity('users')
 export class User {
@@ -50,11 +53,20 @@ export class User {
   @Column({ nullable: true })
   reset_token: string;
 
+  @ManyToMany(() => Chat, (chat) => chat.users)
+  chats: Chat[];
+
   @OneToMany(
     () => VaccineRegistration,
     (vaccineRegistration) => vaccineRegistration.user
   )
   vaccineRegistrations: VaccineRegistration[];
+
+  @OneToMany(() => Message, (message) => message.sender)
+  send_messages: Message[];
+
+  @OneToMany(() => Message, (message) => message.receiver)
+  receive_messages: Message[];
 
   @Column({
     type: 'timestamp',

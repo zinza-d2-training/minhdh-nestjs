@@ -1,8 +1,8 @@
+import { loginDtoReq } from './dto/loginDtoReq';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcryptjs';
-import { loginDto } from './dto/loginDto';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { Repository } from 'typeorm';
 import { User } from 'src/typeorm/entities/User';
@@ -17,26 +17,23 @@ export class AuthService {
     private userRepository: Repository<User>
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findUserByEmail(email);
+  async login(data: loginDtoReq) {
+    const user = await this.userService.findUserByEmail(data.email);
     if (user) {
-      const is_equal = await bcrypt.compare(password, user.password);
+      const is_equal = bcrypt.compareSync(data.password, user.password);
       if (is_equal) {
-        return user;
+        const token = this.jwtService.sign(
+          { id: user.id, email: user.email },
+          {
+            secret: process.env.JWT_SECRET_KEY
+          }
+        );
+        return { token };
+      } else {
+        return null;
       }
-    } else {
-      return null;
     }
-  }
-
-  async login(user: loginDto) {
-    const token = this.jwtService.sign(
-      { id: user.id, email: user.email },
-      {
-        secret: process.env.JWT_SECRET_KEY
-      }
-    );
-    return { token };
+    return null;
   }
 
   async register(user: CreateUserDto) {
@@ -47,15 +44,13 @@ export class AuthService {
       if (!userExist) {
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(user.password, salt);
-        return await this.userRepository.save({
+        await this.userRepository.save({
           ...user,
           password: hashPassword
         });
+        return { msgSuccess: 'Đăng ký thành công!' };
       } else {
-        throw new HttpException(
-          'Tài khoản đã tồn tại',
-          HttpStatus.NOT_ACCEPTABLE
-        );
+        return { msgError: 'Tài khoản đã tồn tại!' };
       }
     } catch (error) {
       throw new HttpException(error, 400, { cause: new Error('Some Error') });
