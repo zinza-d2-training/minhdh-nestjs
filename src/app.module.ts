@@ -14,6 +14,9 @@ import { VaccineRegistrationModule } from './vaccine-registration/vaccine-regist
 import { GroupModule } from './group/group.module';
 import { VaccineModule } from './vaccine/vaccine.module';
 import { DocumentModule } from './document/document.module';
+import { AppGateway } from './app/app.gateway';
+import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,9 +32,11 @@ import { DocumentModule } from './document/document.module';
     VaccineRegistrationModule,
     GroupModule,
     VaccineModule,
-    DocumentModule
+    DocumentModule,
+    ChatModule,
+    MessageModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, AppGateway]
 })
 export class AppModule {}
