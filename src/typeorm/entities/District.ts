@@ -15,7 +15,7 @@ export class District {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 
   @Column()

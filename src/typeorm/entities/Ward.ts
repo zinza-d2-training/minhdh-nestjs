@@ -16,7 +16,7 @@ export class Ward {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 
   @Column()

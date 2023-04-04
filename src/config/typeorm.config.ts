@@ -10,11 +10,11 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (): Promise<TypeOrmModuleOptions> => {
     return {
       type: 'mysql',
-      host: process.env.HOST,
-      port: parseInt(process.env.PORT, 10) || 3306,
-      username: process.env.USER,
-      database: process.env.DB,
-      password: process.env.PASSWORD,
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      database: 'db_minh',
+      password: '',
       entities: [__dirname + '/../typeorm/entities/*{.ts,.js}'],
       migrations: [__dirname + '/../migrations/**/*{.ts,.js}'],
       extra: {

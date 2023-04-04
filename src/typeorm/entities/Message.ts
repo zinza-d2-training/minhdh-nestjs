@@ -17,7 +17,7 @@ export class Message {
   text: string;
 
   @Column()
-  type: number;
+  type: string;
 
   @Column()
   chat_id: number;

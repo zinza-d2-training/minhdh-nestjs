@@ -5,11 +5,12 @@ import {
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer
+  WebSocketServer,
+  MessageBody
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway(8001, { cors: '*:*' })
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -34,8 +35,7 @@ export class AppGateway
   }
 
   @SubscribeMessage('message')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  handleMessage(@MessageBody() message: string) {
+    this.server.emit('message', message);
   }
 }

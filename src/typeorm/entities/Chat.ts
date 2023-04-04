@@ -3,22 +3,20 @@ import {
   Column,
   Timestamp,
   PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany
+  OneToMany
 } from 'typeorm';
 import { Message } from './Message';
-import { User } from './User';
 
 @Entity('chats')
 export class Chat {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   message_flat: string;
 
-  @ManyToMany(() => User, (user) => user.chats)
-  users: User[];
+  @Column()
+  user_id: number;
 
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
