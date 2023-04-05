@@ -27,6 +27,16 @@ export class UserService {
     }
   }
 
+  async findUserByChatId(id: number) {
+    try {
+      return await this.repo.findOne({
+        where: { chat_id: id }
+      });
+    } catch (err) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async findUserByEmail(email: string) {
     try {
       return await this.repo.findOne({

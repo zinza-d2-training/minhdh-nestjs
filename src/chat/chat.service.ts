@@ -30,4 +30,8 @@ export class ChatService {
   async getChat(id: number) {
     return await this.repoChat.findOne({ where: { user_id: id } });
   }
+
+  async getChatById(id: number) {
+    return await this.repoChat.findOne({ where: { id: id } });
+  }
 }

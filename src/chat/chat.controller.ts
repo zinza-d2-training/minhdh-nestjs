@@ -14,8 +14,13 @@ export class ChatController {
   constructor(private chatService: ChatService) {}
 
   @Get(':id')
-  async getChat(@Param('id', ParseIntPipe) id: number) {
+  async getChatByUserId(@Param('id', ParseIntPipe) id: number) {
     return await this.chatService.getChat(id);
+  }
+
+  @Get(':id/chat')
+  async getChatById(@Param('id', ParseIntPipe) id: number) {
+    return await this.chatService.getChatById(id);
   }
 
   @Post()

@@ -19,8 +19,13 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUserById(@Param('id', ParseIntPipe) id: number) {
+  async getUserByChatId(@Param('id', ParseIntPipe) id: number) {
     return await this.userService.findUserById(id);
+  }
+
+  @Get(':id/chat')
+  async getUserById(@Param('id', ParseIntPipe) id: number) {
+    return await this.userService.findUserByChatId(id);
   }
 
   @Post(':id')
