@@ -1,4 +1,11 @@
-import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post
+} from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageCreateDto } from './dto/message-create.dto';
 
@@ -12,7 +19,7 @@ export class MessageController {
   }
 
   @Post()
-  async newMessage(newMessage: MessageCreateDto) {
+  async newMessage(@Body() newMessage: MessageCreateDto) {
     return await this.messageService.newMessage(newMessage);
   }
 }

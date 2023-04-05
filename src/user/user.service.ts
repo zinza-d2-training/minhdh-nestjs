@@ -1,7 +1,7 @@
 import { UpdateUser } from './dtos/update-user.dto';
 import { UpdateInfoUser } from './dtos/update-info-user-dto';
 import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/typeorm/entities/User';
@@ -11,7 +11,7 @@ export class UserService {
 
   async findAll() {
     try {
-      return await this.repo.find();
+      return await this.repo.find({ where: { id: Not(1) } });
     } catch (err) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }

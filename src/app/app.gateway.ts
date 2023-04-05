@@ -9,8 +9,10 @@ import {
   MessageBody
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Message } from 'src/typeorm/entities/Message';
+import { addUser, getUser } from './function';
 
-@WebSocketGateway(8001, { cors: '*:*' })
+@WebSocketGateway(8001, { cors: 'http:localhost:3000' })
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -34,8 +36,25 @@ export class AppGateway
     this.logger.log('disconnected');
   }
 
-  @SubscribeMessage('message')
-  handleMessage(@MessageBody() message: string) {
-    this.server.emit('message', message);
+  @SubscribeMessage('send message to admin')
+  handleMessageToAdmin(@MessageBody() message: Message): void {
+    this.server.emit('message received from user', message);
   }
+
+  // @SubscribeMessage('send message to user')
+  // handleMessageToUser(@MessageBody() message: Message, socket: Socket): void {
+  //   socket
+  //     .in(`${message.receiver_id}`)
+  //     .emit('message received from admin', message);
+  // }
+
+  // @SubscribeMessage('typing')
+  // handleTyping(room: number, socket: Socket): void {
+  //   socket.in(`${room}`).emit('typing');
+  // }
+
+  // @SubscribeMessage('stop typing')
+  // handleStopTyping(room: number, socket: Socket): void {
+  //   socket.in(`${room}`).emit('stop typing');
+  // }
 }

@@ -8,10 +8,12 @@ import {
   Timestamp,
   ManyToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  OneToOne
 } from 'typeorm';
 import { Ward } from './Ward';
 import { Message } from './Message';
+import { Chat } from './Chat';
 
 @Entity('users')
 export class User {
@@ -49,7 +51,14 @@ export class User {
   ward_id: number;
 
   @Column({ nullable: true })
+  chat_id: number;
+
+  @Column({ nullable: true })
   reset_token: string;
+
+  @OneToOne(() => Chat, (chat) => chat.user)
+  @JoinColumn({ name: 'chat_id' })
+  chat: Chat;
 
   @OneToMany(
     () => VaccineRegistration,

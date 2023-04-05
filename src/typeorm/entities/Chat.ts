@@ -3,9 +3,12 @@ import {
   Column,
   Timestamp,
   PrimaryGeneratedColumn,
-  OneToMany
+  OneToMany,
+  OneToOne,
+  JoinColumn
 } from 'typeorm';
 import { Message } from './Message';
+import { User } from './User';
 
 @Entity('chats')
 export class Chat {
@@ -17,6 +20,10 @@ export class Chat {
 
   @Column()
   user_id: number;
+
+  @OneToOne(() => User, (user) => user.chat)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];

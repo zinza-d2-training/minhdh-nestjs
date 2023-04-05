@@ -18,9 +18,11 @@ export class MessageService {
     await this.repoMessage.save(newMessage);
     await this.repoChat.update(
       { id: newMessage.chat_id },
-      { message_flat: newMessage.text }
+      { message_flat: newMessage.text, updated_at: new Date() }
     );
-    return { msg: 'Success' };
+    return await this.repoMessage.findOne({
+      where: { chat_id: newMessage.chat_id }
+    });
   }
 
   async getMessages(id: number) {

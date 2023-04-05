@@ -5,20 +5,14 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Post,
-  UseGuards
+  Post
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/role.enum';
-import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
   @Get()
   async getAllUsers() {
     return await this.userService.findAll();

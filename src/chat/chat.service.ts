@@ -12,13 +12,19 @@ export class ChatService {
   ) {}
 
   async newChat(newChat: ChatCreateDto) {
+    console.log(newChat);
     const chat = await this.repoChat.findOne({
       where: { user_id: newChat.user_id }
     });
     if (chat) {
       return chat;
     }
-    return await this.repoChat.save(newChat);
+    const a = this.repoChat.create(newChat);
+    await this.repoChat.save(a);
+    const chatNew = await this.repoChat.findOne({
+      where: { user_id: newChat.user_id }
+    });
+    return chatNew;
   }
 
   async getChat(id: number) {

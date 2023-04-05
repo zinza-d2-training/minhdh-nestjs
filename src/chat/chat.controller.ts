@@ -1,4 +1,11 @@
-import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post
+} from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatCreateDto } from './dto/chat-create.dto';
 
@@ -12,7 +19,7 @@ export class ChatController {
   }
 
   @Post()
-  async newChat(newChat: ChatCreateDto) {
+  async newChat(@Body() newChat: ChatCreateDto) {
     return await this.chatService.newChat(newChat);
   }
 }
