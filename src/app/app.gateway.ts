@@ -41,20 +41,28 @@ export class AppGateway
     this.server.emit('message received from user', message);
   }
 
-  // @SubscribeMessage('send message to user')
-  // handleMessageToUser(@MessageBody() message: Message, socket: Socket): void {
-  //   socket
-  //     .in(`${message.receiver_id}`)
-  //     .emit('message received from admin', message);
-  // }
+  @SubscribeMessage('send message to user')
+  handleMessageToUser(@MessageBody() message: Message): void {
+    this.server.emit('message received from admin', message);
+  }
 
-  // @SubscribeMessage('typing')
-  // handleTyping(room: number, socket: Socket): void {
-  //   socket.in(`${room}`).emit('typing');
-  // }
+  @SubscribeMessage('typing to user')
+  handleTypingToUser(): void {
+    this.server.emit('typing from admin');
+  }
 
-  // @SubscribeMessage('stop typing')
-  // handleStopTyping(room: number, socket: Socket): void {
-  //   socket.in(`${room}`).emit('stop typing');
-  // }
+  @SubscribeMessage('typing to admin')
+  handleTypingToAdmin(): void {
+    this.server.emit('typing from user');
+  }
+
+  @SubscribeMessage('stop typing to user')
+  handleStopTypingToUser(): void {
+    this.server.emit('stop typing from admin');
+  }
+
+  @SubscribeMessage('stop typing to admin')
+  handleStopTypingToAdmin(): void {
+    this.server.emit('stop typing from user');
+  }
 }

@@ -7,6 +7,7 @@ import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { Repository } from 'typeorm';
 import { User } from 'src/typeorm/entities/User';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Chat } from 'src/typeorm/entities/Chat';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,9 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    @InjectRepository(Chat)
+    private repoChat: Repository<Chat>
   ) {}
 
   async login(data: loginDtoReq) {
@@ -48,6 +51,25 @@ export class AuthService {
           ...user,
           password: hashPassword
         });
+        const userr = await this.userRepository.findOne({
+          where: { identity_card_number: user.identity_card_number }
+        });
+        const chat = this.repoChat.create({
+          message_flat: null,
+          user_id: userr.id
+        });
+        await this.repoChat.save(chat);
+        const chatt = await this.repoChat.findOne({
+          where: {
+            user_id: userr.id
+          }
+        });
+        await this.userRepository.update(
+          { id: userr.id },
+          {
+            chat_id: chatt.id
+          }
+        );
         return { msgSuccess: 'Đăng ký thành công!' };
       } else {
         return { msgError: 'Tài khoản đã tồn tại!' };

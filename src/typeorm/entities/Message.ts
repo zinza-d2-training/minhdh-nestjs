@@ -1,4 +1,5 @@
 import { Chat } from './Chat';
+import { File } from './File';
 import { User } from './User';
 import {
   Entity,
@@ -6,7 +7,8 @@ import {
   Timestamp,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  OneToOne
 } from 'typeorm';
 @Entity('messages')
 export class Message {
@@ -27,6 +29,13 @@ export class Message {
 
   @Column()
   receiver_id: number;
+
+  @Column({ nullable: true })
+  file_id: number;
+
+  @OneToOne(() => File, (file) => file.message)
+  @JoinColumn({ name: 'file_id' })
+  file: File;
 
   @ManyToOne(() => User, (user) => user.send_messages)
   @JoinColumn({ name: 'sender_id' })

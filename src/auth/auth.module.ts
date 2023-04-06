@@ -8,10 +8,11 @@ import { RolesGuard } from './roles.guard';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
+import { Chat } from 'src/typeorm/entities/Chat';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Chat]),
     UserModule,
     PassportModule,
     JwtModule.register({
